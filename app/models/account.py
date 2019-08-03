@@ -16,9 +16,9 @@ class Account:
 
     connection: Type[DBConnection]
 
-    def initialize(cls, connection: Type[DBConnection]):
+    async def initialize(cls, connection: Type[DBConnection]):
         cls.connection = connection
-        cls.connection.execute(cls.table_creation_query)
+        await cls.connection.execute(cls.table_creation_query)
 
     @classmethod
     async def get(cls, username: str) -> Dict[str, str]:
