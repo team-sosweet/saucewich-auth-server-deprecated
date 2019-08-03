@@ -1,5 +1,7 @@
 from typing import Type, Dict, Any
 
+from werkzeug.security import generate_password_hash
+
 from app.models.connections import DBConnection
 
 
@@ -26,3 +28,15 @@ class Account:
             username
         )
         return user
+
+    @classmethod
+    async def register(cls, username: str, password: str) -> bool:
+        query = "INSERT INTO `account` VALUES (%s, %s)"
+        try:
+            await cls.connection.execute(
+                query,
+                (username, generate_password_hash(password))
+            )
+            return True
+        except:
+            return False
