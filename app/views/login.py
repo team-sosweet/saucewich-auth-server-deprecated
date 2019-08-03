@@ -24,7 +24,7 @@ class LoginView(HTTPMethodView):
         elif not check_password_hash(account['password'], password):
             abort(401)
         else:
-            # FIXME: check already logged in
+            await Session.remove(username=username)
             new_session_id = uuid4().hex
             await Session.add(username, new_session_id)
 
