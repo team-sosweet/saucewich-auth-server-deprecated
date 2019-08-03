@@ -1,9 +1,9 @@
 from typing import Type, Dict, Any
 
-from app.repositories.connections import DBConnection
+from app.models.connections import DBConnection
 
 
-class AccountRepository:
+class Account:
     table_creation_query = """
         CREATE TABLE IF NOT EXISTS `account` (
             `seq` INT(11) AUTO_INCREMENT PRIMARY KEY,
@@ -12,12 +12,16 @@ class AccountRepository:
         );
     """
 
-    def __init__(self, connection: Type[DBConnection]):
-        self.connection = connection
+    connection: Type[DBConnection]
 
-    def get(self, username: str) -> Dict[str, str]:
+    def initialize(cls, connection: Type[DBConnection]):
+        cls.connection = connection
+        cls.connection.execute(cls.table_creation_query)
+
+    @classmethod
+    async def get(cls, username: str) -> Dict[str, str]:
         query = "SELECT * FROM `account` WHERE `username` = %s;"
-        user =  self.connection.fetchone(
+        user =  await cls.connection.fetchone(
             query,
             username
         )
