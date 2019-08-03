@@ -11,6 +11,7 @@ class Session:
 
     TTL = 1800
 
+    @classmethod
     def initialize(cls, connection: Type[KVConnection]):
         cls.connection = connection
 

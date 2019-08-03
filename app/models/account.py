@@ -16,6 +16,7 @@ class Account:
 
     connection: Type[DBConnection]
 
+    @classmethod
     async def initialize(cls, connection: Type[DBConnection]):
         cls.connection = connection
         await cls.connection.execute(cls.table_creation_query)
