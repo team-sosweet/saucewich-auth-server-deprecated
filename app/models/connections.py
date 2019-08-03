@@ -182,11 +182,11 @@ class RedisConnection(KVConnection):
 
     @classmethod
     async def exists(cls, key: str) -> bool:
-        return cls.redis.exists(key)
+        return await cls.redis.exists(key)
 
     @classmethod
     async def expire(cls, key: str, timeout: int) -> bool:
-        return bool(cls.redis.expire(key, timeout))
+        return bool(await cls.redis.expire(key, timeout))
 
     @classmethod
     async def flush_all(cls):
