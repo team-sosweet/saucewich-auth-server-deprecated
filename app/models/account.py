@@ -32,7 +32,7 @@ class Account:
 
     @classmethod
     async def register(cls, username: str, password: str) -> bool:
-        query = "INSERT INTO `account` VALUES (%s, %s)"
+        query = "INSERT INTO `account` (`username`, `password`) VALUES (%s, %s)"
         try:
             await cls.connection.execute(
                 query,

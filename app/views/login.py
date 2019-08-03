@@ -21,7 +21,7 @@ class LoginView(HTTPMethodView):
 
         if account is None:
             abort(404)
-        elif not check_password_hash(password, account['password']):
+        elif not check_password_hash(account['password'], password):
             abort(401)
         else:
             # FIXME: check already logged in
