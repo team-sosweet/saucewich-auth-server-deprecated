@@ -31,12 +31,19 @@ class Account:
         return user
 
     @classmethod
-    async def register(cls, username: str, password: str) -> bool:
-        query = "INSERT INTO `account` (`username`, `password`) VALUES (%s, %s)"
+    async def register(cls, username: str, password: str, nickname: str) -> bool:
+        query = """INSERT INTO `account` (`username`, `password`) VALUES (%s, %s);
+        INSERT INTO `users` (`user_id`, `nickname`) VALUES ((SELECT `seq` FROM `account` WHERE `username` = %s), %s)"""
+
         try:
             await cls.connection.execute(
                 query,
-                (username, generate_password_hash(password))
+                (
+                    username,
+                    generate_password_hash(password),
+                    username,
+                    nickname,
+                )
             )
             return True
         except:
