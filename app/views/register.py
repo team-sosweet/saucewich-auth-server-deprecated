@@ -7,6 +7,7 @@ from app.models.account import Account
 
 blueprint = Blueprint('register-api', url_prefix='/register')
 
+
 class RegisterView(HTTPMethodView):
     async def post(self, request: Request):
         username: str = request.json['username']
@@ -15,5 +16,6 @@ class RegisterView(HTTPMethodView):
         return json({
             'success': await Account.register(username, password)
         })
+
 
 blueprint.add_route(RegisterView.as_view(), '/')

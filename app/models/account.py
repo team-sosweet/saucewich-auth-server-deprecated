@@ -1,4 +1,4 @@
-from typing import Type, Dict, Any
+from typing import Type, Dict
 
 from werkzeug.security import generate_password_hash
 
@@ -24,7 +24,7 @@ class Account:
     @classmethod
     async def get(cls, username: str) -> Dict[str, str]:
         query = "SELECT * FROM `account` WHERE `username` = %s;"
-        user =  await cls.connection.fetchone(
+        user = await cls.connection.fetchone(
             query,
             username
         )

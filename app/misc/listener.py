@@ -22,13 +22,16 @@ async def initialize_connections(app, loop):
         'address': 'redis://localhost'
     })
 
+
 async def initialize_models(app, loop):
     await Account.initialize(MySQLConnection)
     Session.initialize(RedisConnection)
 
+
 async def destroy_connections(app, loop):
     await MySQLConnection.destroy()
     await RedisConnection.destroy()
+
 
 def register_listeners(app: Sanic):
     app.register_listener(initialize_connections, 'before_server_start')

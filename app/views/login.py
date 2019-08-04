@@ -12,6 +12,7 @@ from app.models.session import Session
 
 blueprint = Blueprint('login-api', url_prefix='/login')
 
+
 class LoginView(HTTPMethodView):
     async def post(self, request: Request):
         username: str = request.json['username']
@@ -31,5 +32,6 @@ class LoginView(HTTPMethodView):
             return json({
                 'session_id': new_session_id
             })
+
 
 blueprint.add_route(LoginView.as_view(), '/')
